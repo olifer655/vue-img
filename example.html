@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>vue-img 2.0 demo</title>
+
+  <style>
+    div {
+      width: 500px;
+      height: 500px;
+    }
+  </style>
+</head>
+<body>
+  <img v-img="imgHash">
+  <img v-img="imgHash" width="500">
+  <img v-img="imgHash" height="500">
+  <img v-img="imgHash" width="500" height="500">
+
+  <div v-img="imgHash"></div>
+  <div v-img="imgHash" width="500"></div>
+  <div v-img="imgHash" height="500"></div>
+  <div v-img="imgHash" width="500" height="500"></div>
+
+
+  <script src="http://github.elemecdn.com/vuejs/vue/v1.0.24/dist/vue.min.js"></script>
+  <script src="./vue-img.js"></script>
+  <script>
+    Vue.use(VueImg);
+
+    new Vue({
+      el: 'body',
+
+      data: {
+        imgHash: '1fa68b8d589078c3d44e3ae3d7dac9fejpeg',
+        errHash: 'banricho'
+      }
+    });
+
+    console.log(VueImg.getSrc({
+      hash: '1fa68b8d589078c3d44e3ae3d7dac9fejpeg',
+      width: 100,
+      height: 100,
+      quality: 100
+    }));
+  </script>
+</body>
+</html>

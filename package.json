@@ -1,0 +1,16 @@
+{
+  "name": "vue-img",
+  "version": "2.0.0",
+  "description": "hash2path wrapper for vue.js",
+  "main": "src/index.js",
+  "scripts": {
+    "build": "node rollup.config"
+  },
+  "author": "banricho",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-preset-es2015-rollup": "^1.1.1",
+    "rollup": "^0.33.0",
+    "rollup-plugin-babel": "^2.6.1"
+  }
+}
