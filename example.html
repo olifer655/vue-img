@@ -26,14 +26,22 @@
   <script src="http://github.elemecdn.com/vuejs/vue/v1.0.24/dist/vue.min.js"></script>
   <script src="./vue-img.js"></script>
   <script>
-    Vue.use(VueImg);
+    Vue.use(VueImg, {
+      loading: 'b1d370106bcf3dd82df206820ad4604ajpeg'
+    });
 
     new Vue({
       el: 'body',
 
       data: {
-        imgHash: '1fa68b8d589078c3d44e3ae3d7dac9fejpeg',
+        imgHash: '',
         errHash: 'banricho'
+      },
+
+      ready() {
+        setTimeout(() => {
+          this.imgHash = '1fa68b8d589078c3d44e3ae3d7dac9fejpeg'
+        }, 3000);
       }
     });
 

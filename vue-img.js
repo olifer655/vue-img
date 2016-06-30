@@ -19,7 +19,7 @@
 
   // image hash to patch
   var hashToPath = function hashToPath(hash) {
-    return (hash + '').replace(/^(\w)(\w\w)(\w{29}(\w*))$/, '/$1/$2/$3.$4');
+    return hash.replace(/^(\w)(\w\w)(\w{29}(\w*))$/, '/$1/$2/$3.$4');
   };
 
   // image size
@@ -28,13 +28,15 @@
     var cover = width + 'x' + height;
 
     if (width && height) return sizeParam + ('!' + cover + 'r/gravity/Center/crop/' + cover + '/');
-    if (width && !height) return sizeParam + (width + 'x/');
-    if (!width && height) return sizeParam + ('x' + height + '/');
+    if (width) return sizeParam + (width + 'x/');
+    if (height) return sizeParam + ('x' + height + '/');
     return '';
   };
 
   // image src
   var getSrc = function getSrc(opt) {
+    if (!opt || typeof opt.hash !== 'string' || !opt.hash.length) return '';
+
     var prefix = typeof opt.prefix === 'string' ? opt.prefix : cdn;
     var quality = typeof opt.quality === 'number' ? 'quality/' + opt.quality + '/' : '';
     var format = exports.canWebp ? 'format/webp/' : '';
@@ -54,7 +56,6 @@
   var install = function install(Vue) {
     var opt = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
 
-
     var imageSrc = function imageSrc(hash, width, height) {
       return getSrc({
         hash: hash,
@@ -70,8 +71,10 @@
 
       bind: function bind() {
         var loadHash = this.params.loading || opt.loading;
-        if (!loadHash || !loadHash.length) return;
-        setAttr(this.el, imageSrc(loadHash, this.params.width, this.params.height));
+
+        if (typeof loadHash === 'string' && loadHash.length) {
+          setAttr(this.el, imageSrc(loadHash, this.params.width, this.params.height));
+        }
       },
       update: function update(hash) {
         if (!hash) return;
@@ -82,7 +85,7 @@
 
         img.onload = setAttr.bind(null, this.el, src);
 
-        if (errHash && errHash.length) {
+        if (typeof errHash === 'string' && errHash.length) {
           var errImg = imageSrc(errHash, this.params.width, this.params.height);
           img.onerror = setAttr.bind(null, this.el, errImg);
         }

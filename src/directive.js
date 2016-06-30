@@ -8,7 +8,6 @@ const setAttr = (el, src) => {
 
 // Vue directive
 const install = (Vue, opt = {}) => {
-
   const imageSrc = (hash, width, height) => getSrc({
     hash,
     width,
@@ -22,8 +21,10 @@ const install = (Vue, opt = {}) => {
 
     bind() {
       const loadHash = this.params.loading || opt.loading;
-      if (!loadHash || !loadHash.length) return;
-      setAttr(this.el, imageSrc(loadHash, this.params.width, this.params.height));
+
+      if (typeof loadHash === 'string' && loadHash.length) {
+        setAttr(this.el, imageSrc(loadHash, this.params.width, this.params.height));
+      }
     },
 
     update(hash) {
@@ -35,7 +36,7 @@ const install = (Vue, opt = {}) => {
 
       img.onload = setAttr.bind(null, this.el, src);
 
-      if (errHash && errHash.length) {
+      if (typeof errHash === 'string' && errHash.length) {
         const errImg = imageSrc(errHash, this.params.width, this.params.height);
         img.onerror = setAttr.bind(null, this.el, errImg);
       }
@@ -43,7 +44,6 @@ const install = (Vue, opt = {}) => {
       img.src = src;
     }
   });
-
 };
 
 export default install;

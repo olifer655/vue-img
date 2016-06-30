@@ -8,7 +8,7 @@ const pathname = document.domain.match('alpha.elenet.me')
 const cdn = protocol + pathname;
 
 // image hash to patch
-const hashToPath = hash => (hash + '').replace(/^(\w)(\w\w)(\w{29}(\w*))$/, '/$1/$2/$3.$4');
+const hashToPath = hash => hash.replace(/^(\w)(\w\w)(\w{29}(\w*))$/, '/$1/$2/$3.$4');
 
 // image size
 const getSize = (width, height) => {
@@ -16,13 +16,15 @@ const getSize = (width, height) => {
   const cover = `${width}x${height}`;
 
   if (width && height) return sizeParam + `!${cover}r/gravity/Center/crop/${cover}/`;
-  if (width && !height) return sizeParam + `${width}x/`;
-  if (!width && height) return sizeParam + `x${height}/`;
+  if (width) return sizeParam + `${width}x/`;
+  if (height) return sizeParam + `x${height}/`;
   return '';
 };
 
 // image src
 const getSrc = opt => {
+  if (!opt || typeof opt.hash !== 'string' || !opt.hash.length) return '';
+
   const prefix = typeof opt.prefix === 'string' ? opt.prefix : cdn;
   const quality = typeof opt.quality === 'number' ? `quality/${opt.quality}/` : '';
   const format = canWebp ? 'format/webp/' : '';
