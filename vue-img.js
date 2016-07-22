@@ -37,13 +37,15 @@
   var getSrc = function getSrc(opt) {
     if (!opt || typeof opt.hash !== 'string' || !opt.hash.length) return '';
 
-    var prefix = typeof opt.prefix === 'string' ? opt.prefix : cdn;
+    var srcPrefix = typeof opt.prefix === 'string' ? opt.prefix : cdn;
     var quality = typeof opt.quality === 'number' ? 'quality/' + opt.quality + '/' : '';
     var format = exports.canWebp ? 'format/webp/' : '';
-    var params = '' + quality + format + getSize(opt.width, opt.height);
-    var suffix = params ? '?imageMogr/' + params : '';
+    var suffix = typeof opt.suffix === 'string' ? opt.suffix : '';
 
-    return prefix + hashToPath(opt.hash) + suffix;
+    var params = '' + quality + format + getSize(opt.width, opt.height) + suffix;
+    var srcSuffix = params ? '?imageMogr/' + params : '';
+
+    return srcPrefix + hashToPath(opt.hash) + srcSuffix;
   };
 
   // set img.src or element.style.backgroundImage
@@ -56,37 +58,38 @@
   var install = function install(Vue) {
     var opt = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
 
-    var imageSrc = function imageSrc(hash, width, height) {
+    var imageSrc = function imageSrc(hash, width, height, suffix) {
       return getSrc({
         hash: hash,
         width: width,
         height: height,
+        suffix: suffix,
         prefix: opt.prefix,
         quality: opt.quality
       });
     };
 
     Vue.directive('img', {
-      params: ['width', 'height', 'loading', 'error'],
+      params: ['width', 'height', 'suffix', 'loading', 'error'],
 
       bind: function bind() {
-        var loadHash = this.params.loading || opt.loading;
+        var params = this.params;
+        var loadHash = params.loading || opt.loading;
 
-        if (typeof loadHash === 'string' && loadHash.length) {
-          setAttr(this.el, imageSrc(loadHash, this.params.width, this.params.height));
-        }
+        setAttr(this.el, imageSrc(loadHash, params.width, params.height));
       },
       update: function update(hash) {
         if (!hash) return;
 
+        var params = this.params;
         var img = new Image();
-        var src = imageSrc(hash, this.params.width, this.params.height);
-        var errHash = this.params.error || opt.error;
+        var src = imageSrc(hash, params.width, params.height, params.suffix);
+        var errHash = params.error || opt.error;
 
         img.onload = setAttr.bind(null, this.el, src);
 
         if (typeof errHash === 'string' && errHash.length) {
-          var errImg = imageSrc(errHash, this.params.width, this.params.height);
+          var errImg = imageSrc(errHash, params.width, params.height);
           img.onerror = setAttr.bind(null, this.el, errImg);
         }
 

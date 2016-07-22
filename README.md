@@ -76,6 +76,19 @@ const src = VueImg.getSrc({
 });
 ```
 
+### 扩展参数
+
+VueImg 基于七牛 CDN API 开发，除了常用的图片剪裁之外，你可能还需要高斯模糊、旋转等功能。  
+为此在 2.1.0 版本加入了 `suffix` 配置项，用于自定义扩展参数。它只适用于指令和 `getSrc` 函数。
+
+**高斯模糊**
+
+```HTML
+<img v-img="hash" suffix="blur/3x5">
+```
+
+更多用法请参考[《七牛 CDN 开发者文档》](http://developer.qiniu.com/code/v6/api/kodo-api/image/imagemogr2.html)。
+
 ## 开源协议
 
 MIT

@@ -25,13 +25,15 @@ const getSize = (width, height) => {
 const getSrc = opt => {
   if (!opt || typeof opt.hash !== 'string' || !opt.hash.length) return '';
 
-  const prefix = typeof opt.prefix === 'string' ? opt.prefix : cdn;
+  const srcPrefix = typeof opt.prefix === 'string' ? opt.prefix : cdn;
   const quality = typeof opt.quality === 'number' ? `quality/${opt.quality}/` : '';
   const format = canWebp ? 'format/webp/' : '';
-  const params = `${quality}${format}${getSize(opt.width, opt.height)}`;
-  const suffix = params ? `?imageMogr/${params}` : '';
+  const suffix = typeof opt.suffix === 'string' ? opt.suffix : '';
 
-  return prefix + hashToPath(opt.hash) + suffix;
+  const params = `${quality}${format}${getSize(opt.width, opt.height)}${suffix}`;
+  const srcSuffix = params ? `?imageMogr/${params}` : '';
+
+  return srcPrefix + hashToPath(opt.hash) + srcSuffix;
 };
 
 export default getSrc;

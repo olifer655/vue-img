@@ -17,6 +17,8 @@
   <img v-img="imgHash" height="500">
   <img v-img="imgHash" width="500" height="500">
 
+  <img v-img="imgHash" width="500" height="500" suffix="blur/3x5">
+
   <div v-img="imgHash"></div>
   <div v-img="imgHash" width="500"></div>
   <div v-img="imgHash" height="500"></div>
@@ -27,7 +29,8 @@
   <script src="./vue-img.js"></script>
   <script>
     Vue.use(VueImg, {
-      loading: 'b1d370106bcf3dd82df206820ad4604ajpeg'
+      loading: 'b1d370106bcf3dd82df206820ad4604ajpeg',
+      suffix: 'blur/10x10'
     });
 
     new Vue({
@@ -49,7 +52,8 @@
       hash: '1fa68b8d589078c3d44e3ae3d7dac9fejpeg',
       width: 100,
       height: 100,
-      quality: 100
+      quality: 100,
+      suffix: 'blur/3x5'
     }));
   </script>
 </body>
