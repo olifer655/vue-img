@@ -1,15 +1,10 @@
-# vue-img 2
+# vue-img
 
 vue-img 是饿了么业务中常用的插件，可将 hash 值转为对应的图片地址。  
-
-2.0 版本重构了所有代码，并重新设计了 API。
 
 ## 使用方法
 
 ### 安装插件
-
-2.0 版本中的 `loading` 和 `error` 不再使用路径，而是统一为 hash。  
-此外，`quality` 不再有默认值。
 
 ```JS
 // 默认全局设置
@@ -17,16 +12,14 @@ Vue.use(VueImg);
 
 // 自定义全局设置
 Vue.use(VueImg, {
-  loading: '',      // [String] 占位图片（可选）
-  error: '',        // [String] 错误图片（可选）
+  loading: '',      // [String] 占位图片 hash（可选）
+  error: '',        // [String] 错误图片 hash（可选）
   prefix: '',       // [String] 自定义前缀（可选，默认当前 CDN）
-  quality: 75       // [Number] 图片质量（可选）
+  quality: 75       // [Number] 图片质量（可选，默认为 100）
 });
 ```
 
 ### 使用指令
-
-2.0 版本将指令统一为 `v-img`，并显式的声明 `width` 和 `height`。
 
 ```HTML
 <!-- 设置图片地址 -->
@@ -59,8 +52,7 @@ Vue.use(VueImg, {
 
 ### 可读属性
 
-2.0 版本只保留了 `canWebp` 和 `getSrc`，可用于在指令以外的地方使用。  
-你应当视它们为只读属性，避免直接修改。
+VueImg 提供了 `canWebp` 和 `getSrc` 属性，可在指令以外的地方使用。你应当视它们为只读属性，避免直接修改。
 
 ```JS
 VueImg.canWebp      // [Boolean] 是否支持 webP
@@ -88,6 +80,19 @@ VueImg 基于七牛 CDN API 开发，除了常用的图片剪裁之外，你可�
 ```
 
 更多用法请参考[《七牛 CDN 开发者文档》](http://developer.qiniu.com/code/v6/api/kodo-api/image/imagemogr2.html)。
+
+## 贡献代码
+
+```bash
+# 构建文件
+npm run build
+
+# 单元测试
+npm run test
+```
+
+请确保通过单元测试以后再提交代码。  
+感谢 @YiSiWang 提供测试用例。
 
 ## 开源协议
 
