@@ -1,16 +1,11 @@
-const rollup = require('rollup').rollup;
-const babel = require('rollup-plugin-babel');
+import babel from 'rollup-plugin-babel';
 
-rollup({
+export default {
   entry: 'src/index.js',
+  format: 'umd',
   plugins: [babel({
     presets: ['es2015-rollup']
-  })]
-}).then(bundle => {
-  bundle.write({
-    format: 'umd',
-    moduleId: 'VueImg',
-    moduleName: 'VueImg',
-    dest: 'vue-img.js'
-  });
-});
+  })],
+  moduleName: 'VueImg',
+  dest: 'vue-img.js'
+};
