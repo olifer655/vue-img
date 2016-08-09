@@ -97,16 +97,6 @@ describe('v-img', function () {
     })
   })
 
-  describe('loading="hash"', function () {
-    before(function () {
-      vm = createVueObject(`<img v-img="" loading="${hash}">`)
-    })
-    it('should set loading src', function () {
-      expect(vm.$el.getAttribute('loading')).to.not.exist
-      expect(vm.$el.src).to.equal(VueImg.getSrc({ hash }))
-    })
-  })
-
   describe('error="hash"', function () {
     before(function (done) {
       let wrongHash = '1f888888888888888888888888888888jpeg'
