@@ -4,6 +4,7 @@ import getSrc from './get-src.js';
 const setAttr = (el, src) => {
   if (el.tagName === 'IMG') return el.src = src;
   el.style.backgroundImage = `url(${src})`;
+  el.style.backgroundSize = '100%';
 };
 
 // Vue directive

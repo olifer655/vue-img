@@ -2,9 +2,6 @@ import { canWebp } from './check-webp.js';
 
 // default cdn prefix
 const protocol = location.protocol === 'https:' ? 'https://' : 'http://';
-const pathname = document.domain.match('alpha.elenet.me')
-  ? 'fuss.alpha.elenet.me'
-  : 'fuss10.elemecdn.com';
 const cdn = protocol + pathname;
 
 // image hash to patch

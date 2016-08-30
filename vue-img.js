@@ -1,6 +1,6 @@
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
-  typeof define === 'function' && define.amd ? define('VueImg', ['exports'], factory) :
+  typeof define === 'function' && define.amd ? define(['exports'], factory) :
   (factory((global.VueImg = global.VueImg || {})));
 }(this, function (exports) { 'use strict';
 
@@ -14,7 +14,6 @@
 
   // default cdn prefix
   var protocol = location.protocol === 'https:' ? 'https://' : 'http://';
-  var pathname = document.domain.match('alpha.elenet.me') ? 'fuss.alpha.elenet.me' : 'fuss10.elemecdn.com';
   var cdn = protocol + pathname;
 
   // image hash to patch
